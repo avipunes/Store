@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_afterLoginLayout.cshtml";
+}
+
+<h2>Index</h2>
+<br />
+Hi <b>@Context.User.Identity.Name !</b>
+@Html.ActionLink("Edit Account", "LogIn", "Account")
