@@ -23,6 +23,10 @@ namespace Store.Controllers
         {
             return View();
         }
+        public ActionResult Maps()
+        {
+            return View();
+        }
 
 
         [Authorize]
@@ -64,15 +68,7 @@ namespace Store.Controllers
             ViewBag.Message = message;
 
             return PartialView(UDV);
-            
-            /*UserManager UManager = new UserManager();
-            UserModel UModel = new UserModel();
 
-            List<ProductDataView> allProducts = new List<ProductDataView>();
-
-            allProducts = UManager.GetAllProducts();
-
-            return View(allProducts);*/
         }
 
         [AuthorizeRoles("Admin")]
@@ -119,6 +115,21 @@ namespace Store.Controllers
         }
 
         [AuthorizeRoles("Admin")]
+        public ActionResult AddProduct(string pName, int pPrice,string address)
+        {
+            ProductDataView UDV = new ProductDataView();
+            UDV.product_id = 0;
+            UDV.product_name = pName;
+            UDV.product_price = pPrice;
+            UDV.product_address = address;
+
+            UserManager UM = new UserManager();
+            UM.AddProduct(UDV);
+
+            return Json(new { success = true });
+        }
+
+        [AuthorizeRoles("Admin")]
         public ActionResult UpdateUserData(int userID, string loginName, string password, string firstName, string lastName, string gender, int roleID = 0)
         {
             UserProfileView UPV = new UserProfileView();
@@ -138,6 +149,20 @@ namespace Store.Controllers
             return Json(new { success = true });
         }
 
+        public ActionResult UpdateProductData(int id , string  pName,int  pPrice, string address)
+        {
+            ProductDataView PDV = new ProductDataView();
+            PDV.product_id=id;
+            PDV.product_name = pName;
+            PDV.product_price = pPrice;
+            PDV.product_address = address;
+
+            UserManager UM = new UserManager();
+            UM.UpdateProduct(PDV);
+
+            return Json(new { success = true });
+        }
+
         [AuthorizeRoles("Admin")]
         public ActionResult DeleteUser(int userID)
         {
@@ -145,6 +170,15 @@ namespace Store.Controllers
             UM.DeleteUser(userID);
             return Json(new { success = true });
         }
+
+        [AuthorizeRoles("Admin")]
+        public ActionResult DeleteProduct(int productID)
+        {
+            UserManager UM = new UserManager();
+            UM.DeleteProduct(productID);
+            return Json(new { success = true });
+        }
+
 
         [Authorize]
         public ActionResult EditProfile()

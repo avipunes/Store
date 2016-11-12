@@ -57,6 +57,27 @@ namespace Store.Models.EntityManager
             }
         }
 
+        public void AddProduct(ProductDataView product)
+        {
+
+            using (mydbEntities db = new mydbEntities())
+            {
+
+                var intIdt = db.Products.Max(u => (int)u.product_id);
+
+                Product PR = new Product();
+               
+                PR.product_id = intIdt+1;
+
+                PR.product_name = product.product_name;
+                PR.product_price = product.product_price;
+                PR.product_address = product.product_address;
+
+                db.Products.Add(PR);
+                db.SaveChanges();
+            }
+        }
+
         public bool IsLoginNameExist(string loginName)
         {
             using (mydbEntities db = new mydbEntities())
@@ -310,6 +331,33 @@ namespace Store.Models.EntityManager
                 }
             }
         }
+        public void UpdateProduct(ProductDataView product)
+        {
+
+            using (mydbEntities db = new mydbEntities())
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+
+                        Product PU = db.Products.Find(product.product_id);
+                        PU.product_name= product.product_name;
+                        PU.product_price = product.product_price;
+                        PU.product_address = product.product_address;
+
+                        db.SaveChanges();
+
+                        dbContextTransaction.Commit();
+                    }
+                    catch
+                    {
+                        dbContextTransaction.Rollback();
+                    }
+                }
+            }
+        }
+
 
         public void DeleteUser(int userID)
         {
@@ -351,6 +399,30 @@ namespace Store.Models.EntityManager
             }
         }
 
+        public void DeleteProduct(int productID)
+        {
+            using (mydbEntities db = new mydbEntities())
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var PR = db.Products.Where(o => o.product_id == productID);
+                        if (PR.Any())
+                        {
+                            db.Products.Remove(PR.FirstOrDefault());
+                            db.SaveChanges();
+                        }
+                        dbContextTransaction.Commit();
+                    }
+                    catch
+                    {
+                        dbContextTransaction.Rollback();
+                    }
+                }
+            }
+        }
+
         public ProductDataView GetProductData(int productID)
         {
             ProductDataView PD = new ProductDataView();
@@ -360,9 +432,10 @@ namespace Store.Models.EntityManager
                 var product = db.Products.Find(productID);
                 if (product != null)
                 {
-                    PD.productID = product.product_id;
-                    PD.Productname = product.product_name;
-                    PD.Price = product.product_price;
+                    PD.product_id = product.product_id;
+                    PD.product_name = product.product_name;
+                    PD.product_price = product.product_price;
+                    PD.product_address = product.product_address;
                 }
             }
 

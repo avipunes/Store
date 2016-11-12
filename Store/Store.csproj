@@ -241,6 +241,7 @@
     <Content Include="Views\Home\IndexAfterLogin.cshtml" />
     <Content Include="Views\Shared\_afterAdminLogin.cshtml" />
     <Content Include="Views\Home\Products.cshtml" />
+    <Content Include="Views\Home\Maps.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

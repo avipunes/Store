@@ -7,3 +7,8 @@
 <br />
 Hi <b>@Context.User.Identity.Name !</b>
 @Html.ActionLink("Edit Account", "EditProfile", "Home")
+<h2>For Admin users only!</h2>
+
+<div id="divUserListContainer">
+    @Html.Action("Products", "Home");
+</div>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="mydbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="mydbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="LOOKUPRole">
           <Key>
             <PropertyRef Name="LOOKUPRoleID" />
@@ -21,7 +21,7 @@
           <Key>
             <PropertyRef Name="OrderId" />
           </Key>
-          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="OrderDate" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="Product">
@@ -31,6 +31,7 @@
           <Property Name="product_id" Type="int" Nullable="false" />
           <Property Name="product_name" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="product_price" Type="int" Nullable="false" />
+          <Property Name="product_address" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="SYSUser">
           <Key>
@@ -127,8 +128,7 @@
             <End Role="SYSUserRole" EntitySet="SYSUserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="mydbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -149,16 +149,17 @@
           <Key>
             <PropertyRef Name="OrderId" />
           </Key>
-          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrderDate" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="product_id" />
           </Key>
-          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="product_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="product_price" Type="Int32" Nullable="false" />
+          <Property Name="product_address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SYSUser">
           <Key>
@@ -290,6 +291,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="mydbModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="product_address" ColumnName="product_address" />
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="product_name" ColumnName="product_name" />
                 <ScalarProperty Name="product_price" ColumnName="product_price" />

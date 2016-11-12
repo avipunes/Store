@@ -45,15 +45,10 @@ namespace Store.Models.ViewModel
     public class ProductDataView
     {
         [Key]
-        public int productID { get; set; }
-
-        [Required(ErrorMessage = "*")]
-        [Display(Name = "Product Name")]
-        public string Productname { get; set; }
-
-        [Required(ErrorMessage = "*")]
-        [Display(Name = "Product Price")]
-        public int Price { get; set; }
+        public int product_id { get; set; }
+        public string product_name { get; set; }
+        public int product_price { get; set; }
+        public string product_address { get; set; }
     }
 
     public class UserProfileView

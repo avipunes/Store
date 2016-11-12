@@ -10,94 +10,100 @@
                 <th>ID</th>                         
                 <th>Product Name</th>
                 <th>Price</th>
-                <th></th>
-                <th></th>
+                <th>Address</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var i in Model.Products)
             {
                 <tr>
-                    <td> @Html.DisplayFor(m => i.productID)</td>
-                    <td> @Html.DisplayFor(m => i.Productname)</td>
-                    <td> @Html.DisplayFor(m => i.Price) ₪</td>
-                    <td><a href="javacript:void(0)" class="lnkEdit">Edit</a></td>
-                    <td><a href="javacript:void(0)" class="lnkDelete">Delete</a></td>
+                    <td> @Html.DisplayFor(m => i.product_id)</td>
+                    <td> @Html.DisplayFor(m => i.product_name)</td>
+                    <td> @Html.DisplayFor(m => i.product_price)</td>
+                    <td> @Html.DisplayFor(m => i.product_address)</td>
+                    <td><a href="javacript:void(0)" class="lnkEditP">Edit</a></td>
+                    <td><a href="javacript:void(0)" class="lnkDeleteP">Delete</a></td>
                 </tr>
             }
         </tbody>
     </table>
-    <div id="divEdit" style="display:none">
-        <input type="hidden" id="hidID" />
+    <div id="divEditProduct" style="display:none">
+        <input type="hidden" id="ProductID1" />
         <table>
             <tr>
-                <td>Login Name</td>
-                <td><input type="text" id="txtLoginName" class="form-control" /></td>
+                <td>Product name</td>
+                <td><input type="text" id="ProductName" class="form-control" /></td>
             </tr>
             <tr>
-                <td>Password</td>
-                <td><input type="text" id="txtPassword" class="form-control" /></td>
+                <td>Price</td>
+                <td><input type="text" id="pPrice" class="form-control" /></td>
             </tr>
             <tr>
-                <td>First Name</td>
-                <td><input type="text" id="txtFirstName" class="form-control" /></td>
-            </tr>
-            <tr>
-                <td>Last Name</td>
-                <td><input type="text" id="txtLastName" class="form-control" /></td>
+                <td>Address</td>
+                <td><input type="text" id="pAddress" class="form-control" /></td>
             </tr>
         </table>
     </div>
+
+    <div id="divAddProduct" style="display:none">
+        <table>
+            <tr>
+                <td>Product name</td>
+                <td><input type="text" id="ProductNameAdding" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td><input type="text" id="pPriceAdding" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text" id="pAddressAdding" class="form-control" /></td>
+            </tr>
+        </table>
+    </div>
+
 
 </div>
 
 <script type="text/javascript">
     $(function () {
-
-        var initDialog = function (type) {
+        var initDialogEditP = function (type) {
             var title = type;
-            $("#divEdit").dialog({
+            $("#divEditProduct").dialog({
                 autoOpen: false,
                 modal: true,
-                title: type + ' User',
+                title: type + ' Product',
                 width: 360,
                 dialogClass: 'mod-no-close',
                 buttons: {
                     Save: function () {
-                        var id = $("#hidID").val();
-                        var role = $("#ddlRoles").val();
-                        var loginName = $("#txtLoginName").val();
-                        var loginPass = $("#txtPassword").val();
-                        var fName = $("#txtFirstName").val();
-                        var lName = $("#txtLastName").val();
-                        var gender = $("#ddlGender").val();
+                        var ProductId = $("#ProductID1").val();
+                        var pName = $("#ProductName").val();
+                        var pPrice = $("#pPrice").val();
+                        var pAddress = $("#pAddress").val();
 
-                        UpdateUser(id, loginName, loginPass, fName, lName, gender, role);
+                        UpdateProduct(ProductId, pName, pPrice, pAddress);
                         $(this).dialog("destroy");
                     },
                     Cancel: function () { $(this).dialog("destroy"); }
                 }
             });
         }
-        var initDialogAdd = function (type) {
+        var initDialogAddProduct = function (type) {
             var title = type;
-            $("#divEdit").dialog({
+            $("#divAddProduct").dialog({
                 autoOpen: false,
                 modal: true,
-                title: type + ' User',
+                title: type + ' Product',
                 width: 360,
                 dialogClass: 'mod-no-close',
                 buttons: {
                     Add: function () {
-                        var id = 621;
-                        var role = $("#ddlRoles").val();
-                        var loginName = $("#txtLoginName").val();
-                        var loginPass = $("#txtPassword").val();
-                        var fName = $("#txtFirstName").val();
-                        var lName = $("#txtLastName").val();
-                        var gender = $("#ddlGender").val();
+                        var pName = $("#ProductNameAdding").val();
+                        var pPrice = $("#pPriceAdding").val();
+                        var pAddress = $("#pAddressAdding").val();
 
-                        AddUser(id, loginName, loginPass, fName, lName, gender, role);
+                        AddProduct( pName, pPrice, pAddress);
                         $(this).dialog("destroy");
                     },
                     Cancel: function () { $(this).dialog("destroy"); }
@@ -105,13 +111,13 @@
             });
         }
 
-        function UpdateUser(id, logName, logPass, fName, lName, gender, role) {
+        function UpdateProduct(id1, name, price, address) {
             $.ajax({
                 type: "POST",
-                url: "@(Url.Action("UpdateUserData","Home"))",
-                data: { userID: id, loginName: logName, password: logPass, firstName: fName, lastName: lName, gender: gender, roleID: role },
+                url: "@(Url.Action("UpdateProductData","Home"))",
+                data: { id: id1 , pName: name, pPrice: price, address: address },
                 success: function (data) {
-                    $("#divUserListContainer").load("@(Url.Action("ManageUserPartial","Home", new { status ="update" }))");
+                    $("#divProductListContainer").load("@(Url.Action("Products","Home", new { status ="update" }))");
                 },
                 error: function (error) {
                     //to do:
@@ -119,13 +125,13 @@
             });
         }
 
-        function AddUser(id, logName, logPass, fName, lName, gender, role) {
+        function AddProduct( name, price, address1) {
                 $.ajax({
                     type: "POST",
-                    url: "@(Url.Action("AddUser", "Home"))",
-                    data: { userID: id, loginName: logName, password: logPass, firstName: fName, lastName: lName, gender: gender, roleID: role },
+                    url: "@(Url.Action("AddProduct", "Home"))",
+                    data: { pName: name, pPrice: price ,address: address1 },
                     success: function (data) {
-                          $("#divUserListContainer").load("@(Url.Action("ManageUserPartial","Home", new { status ="update" }))");
+                          $("#divProductListContainer").load("@(Url.Action("Products", "Home", new { status ="update" }))");
                 },
                 error: function (error) {
                     //to do:
@@ -134,81 +140,62 @@
             });
         }
 
-        $("a.lnkEdit").on("click", function () {
-            initDialog("Edit");
+        $("a.lnkEditP").on("click", function () {
+            initDialogEditP("Edit");
+
             $(".alert-success").empty();
-            var row = $(this).closest('tr');
 
-            $("#hidID").val(row.find("td:eq(0)").html().trim());
-            $("#txtLoginName").val(row.find("td:eq(1)").html().trim())
-            $("#txtPassword").val(row.find("td:eq(2)").html().trim())
-            $("#txtFirstName").val(row.find("td:eq(3)").html().trim())
-            $("#txtLastName").val(row.find("td:eq(4)").html().trim())
-            $("#ddlGender").val(row.find("td:eq(5)").html().trim())
-            $("#ddlRoles").val(row.find("td:eq(7) > input").val().trim());
+           var row = $(this).closest('tr');
 
-            $("#divEdit").dialog("open");
+           $("#ProductID1").val(row.find("td:eq(0)").html().trim());
+           console.log(document.getElementById("ProductID1"));
+
+            $("#ProductName").val(row.find("td:eq(1)").html().trim());
+            $("#pPrice").val(row.find("td:eq(2)").html().trim());
+            $("#pAddress").val(row.find("td:eq(3)").html().trim());
+
+
+            $("#divEditProduct").dialog("open");
             return false;
         });
 
-        $(".addUser").on("click", function () {
-            initDialogAdd("Add");
+        $(".AddProduct").on("click", function () {
+            initDialogAddProduct("Add");
             $(".alert-success").empty();
-            var row = $(this).closest('tr');
 
-            $("#hidID").val();
-            $("#txtLoginName").val()
-            $("#txtPassword").val()
-            $("#txtFirstName").val()
-            $("#txtLastName").val()
-            $("#ddlGender").val()
-            $("#ddlRoles").val();
+            $("#ProductNameAdding").val()
+            $("#pPriceAdding").val()
+            $("#pAddress").val()
 
-            $("#divEdit").dialog("open");
+
+            $("#divAddProduct").dialog("open");
             return false;
         });
 
-        function DeleteUser(id) {
+
+
+        function DeleteProduct(id) {
             $.ajax({
                 type: "POST",
-                url: "@(Url.Action("DeleteUser","Home"))",
-                data: { userID: id },
+                url: "@(Url.Action("DeleteProduct","Home"))",
+                data: { productID: id },
                 success: function (data) {
-                   $("#divUserListContainer").load("@(Url.Action("ManageUserPartial","Home", new { status ="delete" }))");
+                   $("#divProductListContainer").load("@(Url.Action("Products","Home", new { status ="delete" }))");
                 },
                 error: function (error) { }
             });
         }
 
-        $("a.lnkDelete").on("click", function () {
+        $("a.lnkDeleteP").on("click", function () {
             var row = $(this).closest('tr');
             var id = row.find("td:eq(0)").html().trim();
-            var answer = confirm("You are about to delete this user with ID " + id + " . Continue?");
+            var answer = confirm("You are about to delete this Product with ID " + id + " . Continue?");
             if (answer)
-                DeleteUser(id);
+                DeleteProduct(id);
             return false;
         });
     });
 
-    function DeleteUser(id) {
-        $.ajax({
-            type: "POST",
-            url: "@(Url.Action("DeleteUser","Home"))",
-            data: { userID: id },
-        success: function (data) {
-            $("#divUserListContainer").load("@(Url.Action("ManageUserPartial","Home", new { status ="delete" }))");
-        },
-        error: function (error) { }
-    });
-    }
 
-    $("a.lnkDelete").on("click", function () {
-        var row = $(this).closest('tr');
-        var id = row.find("td:eq(0)").html().trim();
-        var answer = confirm("You are about to delete this user with ID " + id + " . Continue?");
-        if (answer)
-            DeleteUser(id);
-        return false;
-    });
 
 </script>
