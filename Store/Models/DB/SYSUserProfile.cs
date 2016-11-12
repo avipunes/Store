@@ -25,7 +25,5 @@ namespace Store.Models.DB
         public Nullable<System.DateTime> RowModifiedDateTime { get; set; }
     
         public virtual SYSUser SYSUser { get; set; }
-        public virtual SYSUser SYSUser1 { get; set; }
-        public virtual SYSUser SYSUser2 { get; set; }
     }
 }

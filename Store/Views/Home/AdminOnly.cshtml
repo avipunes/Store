@@ -1,11 +1,13 @@
 ﻿
 @{
     ViewBag.Title = "AdminOnly";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_afterLoginLayout.cshtml";
 }
 
 <h2>For Admin users only!</h2>
 
 <div id="divUserListContainer">
     @Html.Action("ManageUserPartial", "Home");
+    <hr />
+    @Html.Action("Products", "Home");
 </div>  

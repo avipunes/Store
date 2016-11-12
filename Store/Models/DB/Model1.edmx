@@ -17,15 +17,20 @@
           <Property Name="RowModifiedSYSUserID" Type="int" Nullable="false" />
           <Property Name="RowModifiedDateTime" Type="datetime" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="Orders">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="OrderId" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="product_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="product_price" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SYSUser">
           <Key>
@@ -66,7 +71,7 @@
           <Property Name="RowModifiedSYSUserID" Type="int" Nullable="false" />
           <Property Name="RowModifiedDateTime" Type="datetime" />
         </EntityType>
-        <Association Name="FK__SYSUserPr__SYSUs__267ABA7A">
+        <Association Name="FK__SYSUserPr__SYSUs__24927208">
           <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
           <End Role="SYSUserProfile" Type="Self.SYSUserProfile" Multiplicity="*" />
           <ReferentialConstraint>
@@ -78,31 +83,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SYSUserPr__SYSUs__30F848ED">
-          <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
-          <End Role="SYSUserProfile" Type="Self.SYSUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SYSUser">
-              <PropertyRef Name="SYSUserID" />
-            </Principal>
-            <Dependent Role="SYSUserProfile">
-              <PropertyRef Name="SYSUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SYSUserPr__SYSUs__37A5467C">
-          <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
-          <End Role="SYSUserProfile" Type="Self.SYSUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SYSUser">
-              <PropertyRef Name="SYSUserID" />
-            </Principal>
-            <Dependent Role="SYSUserProfile">
-              <PropertyRef Name="SYSUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SYSUserRo__LOOKU__2C3393D0">
+        <Association Name="FK__SYSUserRo__LOOKU__25869641">
           <End Role="LOOKUPRole" Type="Self.LOOKUPRole" Multiplicity="1" />
           <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -114,55 +95,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SYSUserRo__LOOKU__32E0915F">
-          <End Role="LOOKUPRole" Type="Self.LOOKUPRole" Multiplicity="1" />
-          <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LOOKUPRole">
-              <PropertyRef Name="LOOKUPRoleID" />
-            </Principal>
-            <Dependent Role="SYSUserRole">
-              <PropertyRef Name="LOOKUPRoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SYSUserRo__LOOKU__398D8EEE">
-          <End Role="LOOKUPRole" Type="Self.LOOKUPRole" Multiplicity="1" />
-          <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LOOKUPRole">
-              <PropertyRef Name="LOOKUPRoleID" />
-            </Principal>
-            <Dependent Role="SYSUserRole">
-              <PropertyRef Name="LOOKUPRoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SYSUserRo__SYSUs__2D27B809">
-          <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
-          <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SYSUser">
-              <PropertyRef Name="SYSUserID" />
-            </Principal>
-            <Dependent Role="SYSUserRole">
-              <PropertyRef Name="SYSUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SYSUserRo__SYSUs__33D4B598">
-          <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
-          <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SYSUser">
-              <PropertyRef Name="SYSUserID" />
-            </Principal>
-            <Dependent Role="SYSUserRole">
-              <PropertyRef Name="SYSUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SYSUserRo__SYSUs__3A81B327">
+        <Association Name="FK__SYSUserRo__SYSUs__267ABA7A">
           <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
           <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -176,43 +109,20 @@
         </Association>
         <EntityContainer Name="mydbModelStoreContainer">
           <EntitySet Name="LOOKUPRole" EntityType="Self.LOOKUPRole" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYSUser" EntityType="Self.SYSUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYSUserProfile" EntityType="Self.SYSUserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYSUserRole" EntityType="Self.SYSUserRole" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__SYSUserPr__SYSUs__267ABA7A" Association="Self.FK__SYSUserPr__SYSUs__267ABA7A">
+          <AssociationSet Name="FK__SYSUserPr__SYSUs__24927208" Association="Self.FK__SYSUserPr__SYSUs__24927208">
             <End Role="SYSUser" EntitySet="SYSUser" />
             <End Role="SYSUserProfile" EntitySet="SYSUserProfile" />
           </AssociationSet>
-          <AssociationSet Name="FK__SYSUserPr__SYSUs__30F848ED" Association="Self.FK__SYSUserPr__SYSUs__30F848ED">
-            <End Role="SYSUser" EntitySet="SYSUser" />
-            <End Role="SYSUserProfile" EntitySet="SYSUserProfile" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SYSUserPr__SYSUs__37A5467C" Association="Self.FK__SYSUserPr__SYSUs__37A5467C">
-            <End Role="SYSUser" EntitySet="SYSUser" />
-            <End Role="SYSUserProfile" EntitySet="SYSUserProfile" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__LOOKU__2C3393D0" Association="Self.FK__SYSUserRo__LOOKU__2C3393D0">
+          <AssociationSet Name="FK__SYSUserRo__LOOKU__25869641" Association="Self.FK__SYSUserRo__LOOKU__25869641">
             <End Role="LOOKUPRole" EntitySet="LOOKUPRole" />
             <End Role="SYSUserRole" EntitySet="SYSUserRole" />
           </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__LOOKU__32E0915F" Association="Self.FK__SYSUserRo__LOOKU__32E0915F">
-            <End Role="LOOKUPRole" EntitySet="LOOKUPRole" />
-            <End Role="SYSUserRole" EntitySet="SYSUserRole" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__LOOKU__398D8EEE" Association="Self.FK__SYSUserRo__LOOKU__398D8EEE">
-            <End Role="LOOKUPRole" EntitySet="LOOKUPRole" />
-            <End Role="SYSUserRole" EntitySet="SYSUserRole" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__SYSUs__2D27B809" Association="Self.FK__SYSUserRo__SYSUs__2D27B809">
-            <End Role="SYSUser" EntitySet="SYSUser" />
-            <End Role="SYSUserRole" EntitySet="SYSUserRole" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__SYSUs__33D4B598" Association="Self.FK__SYSUserRo__SYSUs__33D4B598">
-            <End Role="SYSUser" EntitySet="SYSUser" />
-            <End Role="SYSUserRole" EntitySet="SYSUserRole" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__SYSUs__3A81B327" Association="Self.FK__SYSUserRo__SYSUs__3A81B327">
+          <AssociationSet Name="FK__SYSUserRo__SYSUs__267ABA7A" Association="Self.FK__SYSUserRo__SYSUs__267ABA7A">
             <End Role="SYSUser" EntitySet="SYSUser" />
             <End Role="SYSUserRole" EntitySet="SYSUserRole" />
           </AssociationSet>
@@ -233,19 +143,22 @@
           <Property Name="RowCreatedDateTime" Type="DateTime" Precision="3" />
           <Property Name="RowModifiedSYSUserID" Type="Int32" Nullable="false" />
           <Property Name="RowModifiedDateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="SYSUserRoles" Relationship="Self.FK__SYSUserRo__LOOKU__2C3393D0" FromRole="LOOKUPRole" ToRole="SYSUserRole" />
-          <NavigationProperty Name="SYSUserRoles1" Relationship="Self.FK__SYSUserRo__LOOKU__32E0915F" FromRole="LOOKUPRole" ToRole="SYSUserRole" />
-          <NavigationProperty Name="SYSUserRoles2" Relationship="Self.FK__SYSUserRo__LOOKU__398D8EEE" FromRole="LOOKUPRole" ToRole="SYSUserRole" />
+          <NavigationProperty Name="SYSUserRoles" Relationship="Self.FK__SYSUserRo__LOOKU__25869641" FromRole="LOOKUPRole" ToRole="SYSUserRole" />
         </EntityType>
-        <EntityType Name="sysdiagram">
+        <EntityType Name="Order">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="OrderId" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="product_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="product_price" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="SYSUser">
           <Key>
@@ -258,12 +171,8 @@
           <Property Name="RowCreatedDateTime" Type="DateTime" Precision="3" />
           <Property Name="RowModifiedSYSUserID" Type="Int32" Nullable="false" />
           <Property Name="RowMOdifiedDateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="SYSUserProfiles" Relationship="Self.FK__SYSUserPr__SYSUs__267ABA7A" FromRole="SYSUser" ToRole="SYSUserProfile" />
-          <NavigationProperty Name="SYSUserProfiles1" Relationship="Self.FK__SYSUserPr__SYSUs__30F848ED" FromRole="SYSUser" ToRole="SYSUserProfile" />
-          <NavigationProperty Name="SYSUserProfiles2" Relationship="Self.FK__SYSUserPr__SYSUs__37A5467C" FromRole="SYSUser" ToRole="SYSUserProfile" />
-          <NavigationProperty Name="SYSUserRoles" Relationship="Self.FK__SYSUserRo__SYSUs__2D27B809" FromRole="SYSUser" ToRole="SYSUserRole" />
-          <NavigationProperty Name="SYSUserRoles1" Relationship="Self.FK__SYSUserRo__SYSUs__33D4B598" FromRole="SYSUser" ToRole="SYSUserRole" />
-          <NavigationProperty Name="SYSUserRoles2" Relationship="Self.FK__SYSUserRo__SYSUs__3A81B327" FromRole="SYSUser" ToRole="SYSUserRole" />
+          <NavigationProperty Name="SYSUserProfiles" Relationship="Self.FK__SYSUserPr__SYSUs__24927208" FromRole="SYSUser" ToRole="SYSUserProfile" />
+          <NavigationProperty Name="SYSUserRoles" Relationship="Self.FK__SYSUserRo__SYSUs__267ABA7A" FromRole="SYSUser" ToRole="SYSUserRole" />
         </EntityType>
         <EntityType Name="SYSUserProfile">
           <Key>
@@ -278,9 +187,7 @@
           <Property Name="RowCreatedDateTime" Type="DateTime" Precision="3" />
           <Property Name="RowModifiedSYSUserID" Type="Int32" Nullable="false" />
           <Property Name="RowModifiedDateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="SYSUser" Relationship="Self.FK__SYSUserPr__SYSUs__267ABA7A" FromRole="SYSUserProfile" ToRole="SYSUser" />
-          <NavigationProperty Name="SYSUser1" Relationship="Self.FK__SYSUserPr__SYSUs__30F848ED" FromRole="SYSUserProfile" ToRole="SYSUser" />
-          <NavigationProperty Name="SYSUser2" Relationship="Self.FK__SYSUserPr__SYSUs__37A5467C" FromRole="SYSUserProfile" ToRole="SYSUser" />
+          <NavigationProperty Name="SYSUser" Relationship="Self.FK__SYSUserPr__SYSUs__24927208" FromRole="SYSUserProfile" ToRole="SYSUser" />
         </EntityType>
         <EntityType Name="SYSUserRole">
           <Key>
@@ -294,14 +201,10 @@
           <Property Name="RowCreatedDateTime" Type="DateTime" Precision="3" />
           <Property Name="RowModifiedSYSUserID" Type="Int32" Nullable="false" />
           <Property Name="RowModifiedDateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="LOOKUPRole" Relationship="Self.FK__SYSUserRo__LOOKU__2C3393D0" FromRole="SYSUserRole" ToRole="LOOKUPRole" />
-          <NavigationProperty Name="LOOKUPRole1" Relationship="Self.FK__SYSUserRo__LOOKU__32E0915F" FromRole="SYSUserRole" ToRole="LOOKUPRole" />
-          <NavigationProperty Name="LOOKUPRole2" Relationship="Self.FK__SYSUserRo__LOOKU__398D8EEE" FromRole="SYSUserRole" ToRole="LOOKUPRole" />
-          <NavigationProperty Name="SYSUser" Relationship="Self.FK__SYSUserRo__SYSUs__2D27B809" FromRole="SYSUserRole" ToRole="SYSUser" />
-          <NavigationProperty Name="SYSUser1" Relationship="Self.FK__SYSUserRo__SYSUs__33D4B598" FromRole="SYSUserRole" ToRole="SYSUser" />
-          <NavigationProperty Name="SYSUser2" Relationship="Self.FK__SYSUserRo__SYSUs__3A81B327" FromRole="SYSUserRole" ToRole="SYSUser" />
+          <NavigationProperty Name="LOOKUPRole" Relationship="Self.FK__SYSUserRo__LOOKU__25869641" FromRole="SYSUserRole" ToRole="LOOKUPRole" />
+          <NavigationProperty Name="SYSUser" Relationship="Self.FK__SYSUserRo__SYSUs__267ABA7A" FromRole="SYSUserRole" ToRole="SYSUser" />
         </EntityType>
-        <Association Name="FK__SYSUserRo__LOOKU__2C3393D0">
+        <Association Name="FK__SYSUserRo__LOOKU__25869641">
           <End Role="LOOKUPRole" Type="Self.LOOKUPRole" Multiplicity="1" />
           <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -313,31 +216,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SYSUserRo__LOOKU__32E0915F">
-          <End Role="LOOKUPRole" Type="Self.LOOKUPRole" Multiplicity="1" />
-          <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LOOKUPRole">
-              <PropertyRef Name="LOOKUPRoleID" />
-            </Principal>
-            <Dependent Role="SYSUserRole">
-              <PropertyRef Name="LOOKUPRoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SYSUserRo__LOOKU__398D8EEE">
-          <End Role="LOOKUPRole" Type="Self.LOOKUPRole" Multiplicity="1" />
-          <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LOOKUPRole">
-              <PropertyRef Name="LOOKUPRoleID" />
-            </Principal>
-            <Dependent Role="SYSUserRole">
-              <PropertyRef Name="LOOKUPRoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SYSUserPr__SYSUs__267ABA7A">
+        <Association Name="FK__SYSUserPr__SYSUs__24927208">
           <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
           <End Role="SYSUserProfile" Type="Self.SYSUserProfile" Multiplicity="*" />
           <ReferentialConstraint>
@@ -349,55 +228,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SYSUserPr__SYSUs__30F848ED">
-          <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
-          <End Role="SYSUserProfile" Type="Self.SYSUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SYSUser">
-              <PropertyRef Name="SYSUserID" />
-            </Principal>
-            <Dependent Role="SYSUserProfile">
-              <PropertyRef Name="SYSUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SYSUserPr__SYSUs__37A5467C">
-          <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
-          <End Role="SYSUserProfile" Type="Self.SYSUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SYSUser">
-              <PropertyRef Name="SYSUserID" />
-            </Principal>
-            <Dependent Role="SYSUserProfile">
-              <PropertyRef Name="SYSUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SYSUserRo__SYSUs__2D27B809">
-          <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
-          <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SYSUser">
-              <PropertyRef Name="SYSUserID" />
-            </Principal>
-            <Dependent Role="SYSUserRole">
-              <PropertyRef Name="SYSUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SYSUserRo__SYSUs__33D4B598">
-          <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
-          <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SYSUser">
-              <PropertyRef Name="SYSUserID" />
-            </Principal>
-            <Dependent Role="SYSUserRole">
-              <PropertyRef Name="SYSUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SYSUserRo__SYSUs__3A81B327">
+        <Association Name="FK__SYSUserRo__SYSUs__267ABA7A">
           <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
           <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -411,43 +242,20 @@
         </Association>
         <EntityContainer Name="mydbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="LOOKUPRoles" EntityType="Self.LOOKUPRole" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="SYSUsers" EntityType="Self.SYSUser" />
           <EntitySet Name="SYSUserProfiles" EntityType="Self.SYSUserProfile" />
           <EntitySet Name="SYSUserRoles" EntityType="Self.SYSUserRole" />
-          <AssociationSet Name="FK__SYSUserRo__LOOKU__2C3393D0" Association="Self.FK__SYSUserRo__LOOKU__2C3393D0">
+          <AssociationSet Name="FK__SYSUserRo__LOOKU__25869641" Association="Self.FK__SYSUserRo__LOOKU__25869641">
             <End Role="LOOKUPRole" EntitySet="LOOKUPRoles" />
             <End Role="SYSUserRole" EntitySet="SYSUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__LOOKU__32E0915F" Association="Self.FK__SYSUserRo__LOOKU__32E0915F">
-            <End Role="LOOKUPRole" EntitySet="LOOKUPRoles" />
-            <End Role="SYSUserRole" EntitySet="SYSUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__LOOKU__398D8EEE" Association="Self.FK__SYSUserRo__LOOKU__398D8EEE">
-            <End Role="LOOKUPRole" EntitySet="LOOKUPRoles" />
-            <End Role="SYSUserRole" EntitySet="SYSUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SYSUserPr__SYSUs__267ABA7A" Association="Self.FK__SYSUserPr__SYSUs__267ABA7A">
+          <AssociationSet Name="FK__SYSUserPr__SYSUs__24927208" Association="Self.FK__SYSUserPr__SYSUs__24927208">
             <End Role="SYSUser" EntitySet="SYSUsers" />
             <End Role="SYSUserProfile" EntitySet="SYSUserProfiles" />
           </AssociationSet>
-          <AssociationSet Name="FK__SYSUserPr__SYSUs__30F848ED" Association="Self.FK__SYSUserPr__SYSUs__30F848ED">
-            <End Role="SYSUser" EntitySet="SYSUsers" />
-            <End Role="SYSUserProfile" EntitySet="SYSUserProfiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SYSUserPr__SYSUs__37A5467C" Association="Self.FK__SYSUserPr__SYSUs__37A5467C">
-            <End Role="SYSUser" EntitySet="SYSUsers" />
-            <End Role="SYSUserProfile" EntitySet="SYSUserProfiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__SYSUs__2D27B809" Association="Self.FK__SYSUserRo__SYSUs__2D27B809">
-            <End Role="SYSUser" EntitySet="SYSUsers" />
-            <End Role="SYSUserRole" EntitySet="SYSUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__SYSUs__33D4B598" Association="Self.FK__SYSUserRo__SYSUs__33D4B598">
-            <End Role="SYSUser" EntitySet="SYSUsers" />
-            <End Role="SYSUserRole" EntitySet="SYSUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__SYSUs__3A81B327" Association="Self.FK__SYSUserRo__SYSUs__3A81B327">
+          <AssociationSet Name="FK__SYSUserRo__SYSUs__267ABA7A" Association="Self.FK__SYSUserRo__SYSUs__267ABA7A">
             <End Role="SYSUser" EntitySet="SYSUsers" />
             <End Role="SYSUserRole" EntitySet="SYSUserRoles" />
           </AssociationSet>
@@ -471,14 +279,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="mydbModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="mydbModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="mydbModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="product_price" ColumnName="product_price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

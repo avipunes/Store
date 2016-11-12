@@ -44,7 +44,7 @@ namespace Store.Models.EntityManager
                 {
                     SYSUserRole SUR = new SYSUserRole();
                     SUR.LOOKUPRoleID = user.LOOKUPRoleID;
-                    SUR.SYSUserID = user.SYSUserID;
+                    SUR.SYSUserID = SU.SYSUserID;
                     SUR.IsActive = true;
                     SUR.RowCreatedSYSUserID = user.SYSUserID > 0 ? user.SYSUserID : 1;
                     SUR.RowModifiedSYSUserID = user.SYSUserID > 0 ? user.SYSUserID : 1;
@@ -136,6 +136,30 @@ namespace Store.Models.EntityManager
                             }
             return 0;
         }
+
+        public List<ProductDataView> GetAllProducts()
+        {
+            List <ProductDataView> products = new List<ProductDataView>();
+
+            using(mydbEntities db =new mydbEntities())
+            {
+                ProductDataView PR;
+                var pros = db.Products.ToList();
+                if (pros != null)
+                {
+                    foreach (Product p in pros)
+                    {
+                        PR = new ProductDataView();
+                        PR = GetProductData(p.product_id);
+                        products.Add(PR);
+                    }
+                }
+
+            }
+
+            return products;
+        }
+
         public List<UserProfileView> GetAllUserProfiles()
         {
             List<UserProfileView> profiles = new List<UserProfileView>();
@@ -174,6 +198,16 @@ namespace Store.Models.EntityManager
 
             return profiles;
         }
+
+        public ProductsDataView GetProductDataView()
+        {
+            ProductsDataView PDC = new ProductsDataView();
+            List<ProductDataView> products = GetAllProducts();
+            PDC.Products = products;
+
+            return PDC;
+        }
+
 
         public UserDataView GetUserDataView(string loginName)
         {
@@ -315,6 +349,25 @@ namespace Store.Models.EntityManager
                     }
                 }
             }
+        }
+
+        public ProductDataView GetProductData(int productID)
+        {
+            ProductDataView PD = new ProductDataView();
+
+            using (mydbEntities db = new mydbEntities())
+            {
+                var product = db.Products.Find(productID);
+                if (product != null)
+                {
+                    PD.productID = product.product_id;
+                    PD.Productname = product.product_name;
+                    PD.Price = product.product_price;
+                }
+            }
+
+            return PD;
+
         }
 
         public UserProfileView GetUserProfile(int userID)

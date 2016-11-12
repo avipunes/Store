@@ -18,11 +18,7 @@ namespace Store.Models.DB
         public SYSUser()
         {
             this.SYSUserProfiles = new HashSet<SYSUserProfile>();
-            this.SYSUserProfiles1 = new HashSet<SYSUserProfile>();
-            this.SYSUserProfiles2 = new HashSet<SYSUserProfile>();
             this.SYSUserRoles = new HashSet<SYSUserRole>();
-            this.SYSUserRoles1 = new HashSet<SYSUserRole>();
-            this.SYSUserRoles2 = new HashSet<SYSUserRole>();
         }
     
         public int SYSUserID { get; set; }
@@ -36,14 +32,6 @@ namespace Store.Models.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SYSUserProfile> SYSUserProfiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SYSUserProfile> SYSUserProfiles1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SYSUserProfile> SYSUserProfiles2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SYSUserRole> SYSUserRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SYSUserRole> SYSUserRoles1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SYSUserRole> SYSUserRoles2 { get; set; }
     }
 }

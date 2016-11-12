@@ -42,6 +42,19 @@ namespace Store.Models.ViewModel
         [Display(Name = "Password")]
         public string Password { get; set; }
     }
+    public class ProductDataView
+    {
+        [Key]
+        public int productID { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [Display(Name = "Product Name")]
+        public string Productname { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [Display(Name = "Product Price")]
+        public int Price { get; set; }
+    }
 
     public class UserProfileView
     {
@@ -95,5 +108,12 @@ namespace Store.Models.ViewModel
         public IEnumerable<UserProfileView> UserProfile { get; set; }
         public UserRoles UserRoles { get; set; }
         public UserGender UserGender { get; set; }
+    }
+
+
+    public class ProductsDataView
+    {
+        public IEnumerable<ProductDataView> Products { get; set; }
+        //public IEnumerable<ProductDataView> Products { get; set; }
     }
 }

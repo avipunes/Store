@@ -12,12 +12,9 @@ namespace Store.Models.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class Order
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int OrderId { get; set; }
+        public string OrderDate { get; set; }
     }
 }

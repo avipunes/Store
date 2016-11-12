@@ -18,8 +18,6 @@ namespace Store.Models.DB
         public LOOKUPRole()
         {
             this.SYSUserRoles = new HashSet<SYSUserRole>();
-            this.SYSUserRoles1 = new HashSet<SYSUserRole>();
-            this.SYSUserRoles2 = new HashSet<SYSUserRole>();
         }
     
         public int LOOKUPRoleID { get; set; }
@@ -32,9 +30,5 @@ namespace Store.Models.DB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SYSUserRole> SYSUserRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SYSUserRole> SYSUserRoles1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SYSUserRole> SYSUserRoles2 { get; set; }
     }
 }

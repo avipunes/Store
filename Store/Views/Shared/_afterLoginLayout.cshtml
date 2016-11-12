@@ -27,10 +27,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("EDIT PROFILE", "EditProfile", "Home")</li>
                     <li>@Html.ActionLink("Signout", "SIGNOUT", "Account")</li>
-                    @if (this.User.IsInRole("Admin"))
-                    {
-                        <li>@Html.ActionLink("Signout", "SIGNOUT", "Account")</li>
-                    }
+                    <li>@Html.ActionLink("Admin", "AdminOnly", "Home")</li>
                     
                 </ul>
             </div>
