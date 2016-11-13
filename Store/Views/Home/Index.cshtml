@@ -4,6 +4,33 @@
 }
 
 <h2>Index</h2>
+<h2>Our Facebook page :)</h2>
 <br />
-@Html.ActionLink("Login", "LogIn", "Account")
-No Account yet? @Html.ActionLink("Signup Now!", "SignUp", "Account")`
+<!-- FaceBook Page display -->
+<div class="fb-page" data-href="https://www.facebook.com/Store-Sample-698886333599146/?ref=aymt_homepage_panel" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Store-Sample-698886333599146/?ref=aymt_homepage_panel" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Store-Sample-698886333599146/?ref=aymt_homepage_panel">Store Sample</a></blockquote></div>
+
+<!-- Comments display -->
+<script type="text/javascript" src="~/js/canvas.js"></script>
+<div class="move" style="overflow:hidden;">
+    <div>
+        <div id="fb-root"></div>
+        <script>
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/he_IL/sdk.js#xfbml=1&version=v2.7&appId=1009544939144606";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+        <div class="fb-comments" data-href="https://www.facebook.com/Store-Sample-698886333599146/?skip_nax_wizard=true/" data-numposts="5"></div>
+    </div>
+
+    <!-- Video Plugin -->
+    <div class="fb-video" data-href="https://www.facebook.com/findmeafunnyvideo/videos/vl.266561840392361/1249909191700721/?type=1" data-width="250" data-show-text="false"></div>
+
+    <!-- follow us button -->
+    <div class="fb-follow" data-href="https://www.facebook.com/Store-Sample-698886333599146/?ref=aymt_homepage_panel" data-layout="standard" data-size="small" data-show-faces="true"></div>
+
+    @Html.ActionLink("Login", "LogIn", "Account")
+    No Account yet? @Html.ActionLink("Signup Now!", "SignUp", "Account")`
+</div>
