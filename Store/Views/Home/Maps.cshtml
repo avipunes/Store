@@ -35,6 +35,21 @@
         $('#lat').html("<p>Map is not working</p>");
     }
 
+    function getAllAddress() {
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Action("GetAllAddress","Home"))",
+            data: { },
+            success: function (data) {
+                $("#divUserListContainer").load("@(Url.Action("ManageUserPartial","Home", new { status ="update" }))");
+            },
+            error: function (error) {
+                //to do:
+            }
+
+            });
+    }
+
 </script>
     
 <style>

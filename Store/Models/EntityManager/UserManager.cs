@@ -78,6 +78,27 @@ namespace Store.Models.EntityManager
             }
         }
 
+        public void AddSupllier(SupllierDataView supllier)
+        {
+
+            using (mydbEntities db = new mydbEntities())
+            {
+
+                var intIdt = db.Suplliers.Max(u => (int)u.SupllierID);
+
+                Supllier SR = new Supllier();
+
+                SR.SupllierID = intIdt + 1;
+
+                SR.SupllierName = supllier.SupllierName;
+                SR.SupllierPhone = supllier.SupllierPhone;
+                SR.SupllierAddress = supllier.SupllierAddress;
+
+                db.Suplliers.Add(SR);
+                db.SaveChanges();
+            }
+        }
+
         public bool IsLoginNameExist(string loginName)
         {
             using (mydbEntities db = new mydbEntities())
@@ -181,6 +202,35 @@ namespace Store.Models.EntityManager
             return products;
         }
 
+        public List<SupllierDataView> GetAllSuplliers()
+        {
+            List<SupllierDataView> supllier = new List<SupllierDataView>();
+
+            using (mydbEntities db = new mydbEntities())
+            {
+                SupllierDataView SR;
+                var sups = db.Suplliers.ToList();
+                if (sups != null)
+                {
+                    foreach (Supllier s in sups)
+                    {
+                        SR = new SupllierDataView();
+
+                        SR.SupllierID = s.SupllierID;
+                        SR.SupllierName = s.SupllierName;
+                        SR.SupllierPhone = s.SupllierPhone;
+                        SR.SupllierAddress = s.SupllierAddress;
+
+                        supllier.Add(SR);
+                    }
+                }
+
+            }
+
+            return supllier;
+        }
+
+
         public List<UserProfileView> GetAllUserProfiles()
         {
             List<UserProfileView> profiles = new List<UserProfileView>();
@@ -229,6 +279,14 @@ namespace Store.Models.EntityManager
             return PDC;
         }
 
+        public SuplliersDataView GetSupllierDataView()
+        {
+            SuplliersDataView SDC = new SuplliersDataView();
+            List<SupllierDataView> Suplliers = GetAllSuplliers();
+            SDC.suplliers = Suplliers;
+
+            return SDC;
+        }
 
         public UserDataView GetUserDataView(string loginName)
         {
@@ -358,6 +416,33 @@ namespace Store.Models.EntityManager
             }
         }
 
+        public void UpdateSupllier(SupllierDataView supllier)
+        {
+
+            using (mydbEntities db = new mydbEntities())
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+
+                        Supllier SU = db.Suplliers.Find(supllier.SupllierID);
+                        SU.SupllierName = supllier.SupllierName;
+                        SU.SupllierPhone = supllier.SupllierPhone;
+                        SU.SupllierAddress = supllier.SupllierAddress;
+
+                        db.SaveChanges();
+
+                        dbContextTransaction.Commit();
+                    }
+                    catch
+                    {
+                        dbContextTransaction.Rollback();
+                    }
+                }
+            }
+        }
+
 
         public void DeleteUser(int userID)
         {
@@ -423,6 +508,30 @@ namespace Store.Models.EntityManager
             }
         }
 
+        public void DeleteSupllier(int supllierID)
+        {
+            using (mydbEntities db = new mydbEntities())
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var PR = db.Suplliers.Where(o => o.SupllierID == supllierID);
+                        if (PR.Any())
+                        {
+                            db.Suplliers.Remove(PR.FirstOrDefault());
+                            db.SaveChanges();
+                        }
+                        dbContextTransaction.Commit();
+                    }
+                    catch
+                    {
+                        dbContextTransaction.Rollback();
+                    }
+                }
+            }
+        }
+
         public ProductDataView GetProductData(int productID)
         {
             ProductDataView PD = new ProductDataView();
@@ -442,6 +551,8 @@ namespace Store.Models.EntityManager
             return PD;
 
         }
+
+
 
         public UserProfileView GetUserProfile(int userID)
         {

@@ -1,0 +1,2 @@
+.table tr td:nth-last-of-type(-n+2) { display: none; }
+.AddProduct{ display: none; }

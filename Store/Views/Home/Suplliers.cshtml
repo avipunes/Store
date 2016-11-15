@@ -1,0 +1,203 @@
+﻿@model Store.Models.ViewModel.SuplliersDataView
+
+@{
+    ViewBag.Title = "Suplliers";
+    Layout = "~/Views/Shared/_afterLoginLayout.cshtml";
+}
+
+<div>
+    <h1>List of Suplliers</h1>
+    <span class="alert-success">@ViewBag.Message</span>
+    <div class="AddSupllier"><a herf="javascript:void(0)">Add Suplliers</a></div>
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Supllier Name</th>
+                <th>Phone</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model.suplliers)
+            {
+                <tr>
+                    <td> @Html.DisplayFor(m => i.SupllierID)</td>
+                    <td> @Html.DisplayFor(m => i.SupllierName)</td>
+                    <td> @Html.DisplayFor(m => i.SupllierPhone)</td>
+                    <td> @Html.DisplayFor(m => i.SupllierAddress)</td>
+                    <td><a href="javacript:void(0)" class="lnkEditS">Edit</a></td>
+                    <td><a href="javacript:void(0)" class="lnkDeleteS">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="divEditSupllier" style="display:none">
+        <input type="hidden" id="SupllierID1" />
+        <table>
+            <tr>
+                <td>Supplier Name</td>
+                <td><input type="text" id="SupllierName" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td><input type="text" id="sPhone" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text" id="sAddress" class="form-control" /></td>
+            </tr>
+        </table>
+    </div>
+    <div id="divAddSupllier" style="display:none">
+        <table>
+            <tr>
+                <td>Supplier name</td>
+                <td><input type="text" id="SupllierNameAdding" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td><input type="text" id="sPhoneeAdding" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text" id="sAddressAdding" class="form-control" /></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        var initDialogEditP = function (type) {
+            var title = type;
+            $("#divEditSupllier").dialog({
+                autoOpen: false,
+                modal: true,
+                title: type + ' Supllier',
+                width: 360,
+                dialogClass: 'mod-no-close',
+                buttons: {
+                    Save: function () {
+                        var SupllierId = $("#SupllierID1").val();
+                        var sName = $("#SupllierName").val();
+                        var sPhone = $("#sPhone").val();
+                        var sAddress = $("#sAddress").val();
+
+                        UpdateSupllier(SupllierId, sName, sPhone, sAddress);
+                        $(this).dialog("destroy");
+                    },
+                    Cancel: function () { $(this).dialog("destroy"); }
+                }
+            });
+        }
+        var initDialogAddProduct = function (type) {
+            var title = type;
+            $("#divAddSupllier").dialog({
+                autoOpen: false,
+                modal: true,
+                title: type + ' Supllier',
+                width: 360,
+                dialogClass: 'mod-no-close',
+                buttons: {
+                    Add: function () {
+                        var sName = $("#SupllierNameAdding").val();
+                        var sPhone = $("#sPhoneeAdding").val();
+                        var sAddress = $("#sAddressAdding").val();
+
+                        AddSupllier(sName, sPhone, sAddress);
+                        $(this).dialog("destroy");
+                    },
+                    Cancel: function () { $(this).dialog("destroy"); }
+                }
+            });
+        }
+
+        function UpdateSupllier(id1, name, phone, address) {
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Action("UpdateSupllierData","Home"))",
+                data: { id: id1 , sName: name, sPhone: phone, address: address },
+                success: function (data) {
+                    $("#divSupllierListContainer").load("@(Url.Action("Suplliers","Home", new { status ="update" }))");
+                },
+                error: function (error) {
+                    //to do:
+                }
+            });
+        }
+
+        function AddSupllier(name, phone, address1) {
+                $.ajax({
+                    type: "POST",
+                    url: "@(Url.Action("AddSupllier", "Home"))",
+                    data: { sName: name, sPhone: phone ,address: address1 },
+                    success: function (data) {
+                        $("#divSupllierListContainer").load("@(Url.Action("Suplliers", "Home", new { status ="update" }))");
+                },
+                error: function (error) {
+                    //to do:
+                    error.data;
+                }
+            });
+        }
+
+        $("a.lnkEditS").on("click", function () {
+            initDialogEditP("Edit");
+
+            $(".alert-success").empty();
+
+           var row = $(this).closest('tr');
+
+           $("#SupllierID1").val(row.find("td:eq(0)").html().trim());
+           console.log(document.getElementById("SupllierID1"));
+
+            $("#SupllierName").val(row.find("td:eq(1)").html().trim());
+            $("#sPhone").val(row.find("td:eq(2)").html().trim());
+            $("#sAddress").val(row.find("td:eq(3)").html().trim());
+
+
+            $("#divEditSupllier").dialog("open");
+            return false;
+        });
+
+        $(".AddSupllier").on("click", function () {
+            initDialogAddProduct("Add");
+            $(".alert-success").empty();
+
+            $("#SupllierNameAdding").val()
+            $("#sPhoneeAdding").val()
+            $("#sAddressAdding").val()
+
+
+            $("#divAddSupllier").dialog("open");
+            return false;
+        });
+
+
+
+        function DeleteSupllier(id) {
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Action("DeleteSupllier","Home"))",
+                data: { supllierID: id },
+                success: function (data) {
+                   $("#divSupllierListContainer").load("@(Url.Action("Suplliers","Home", new { status ="delete" }))");
+                },
+                error: function (error) { }
+            });
+        }
+
+        $("a.lnkDeleteS").on("click", function () {
+            var row = $(this).closest('tr');
+            var id = row.find("td:eq(0)").html().trim();
+            var answer = confirm("You are about to delete this Supllier with ID " + id + " . Continue?");
+            if (answer)
+                DeleteSupllier(id);
+            return false;
+        });
+    });
+
+
+
+</script>

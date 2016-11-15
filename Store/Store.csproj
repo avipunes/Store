@@ -209,6 +209,9 @@
     <Compile Include="Models\DB\Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DB\Supllier.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DB\SYSUser.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

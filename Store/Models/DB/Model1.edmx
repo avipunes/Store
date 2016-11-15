@@ -32,6 +32,16 @@
           <Property Name="product_name" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="product_price" Type="int" Nullable="false" />
           <Property Name="product_address" Type="varchar" MaxLength="250" />
+          <Property Name="SupllierID" Type="int" />
+        </EntityType>
+        <EntityType Name="Supllier">
+          <Key>
+            <PropertyRef Name="SupllierID" />
+          </Key>
+          <Property Name="SupllierID" Type="int" Nullable="false" />
+          <Property Name="SupllierName" Type="varchar" MaxLength="100" />
+          <Property Name="SupllierPhone" Type="varchar" MaxLength="11" />
+          <Property Name="SupllierAddress" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="SYSUser">
           <Key>
@@ -72,7 +82,19 @@
           <Property Name="RowModifiedSYSUserID" Type="int" Nullable="false" />
           <Property Name="RowModifiedDateTime" Type="datetime" />
         </EntityType>
-        <Association Name="FK__SYSUserPr__SYSUs__24927208">
+        <Association Name="FK__Product__Supllie__286302EC">
+          <End Role="Supllier" Type="Self.Supllier" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supllier">
+              <PropertyRef Name="SupllierID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SupllierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SYSUserPr__SYSUs__29572725">
           <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
           <End Role="SYSUserProfile" Type="Self.SYSUserProfile" Multiplicity="*" />
           <ReferentialConstraint>
@@ -84,7 +106,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SYSUserRo__LOOKU__25869641">
+        <Association Name="FK__SYSUserRo__LOOKU__2A4B4B5E">
           <End Role="LOOKUPRole" Type="Self.LOOKUPRole" Multiplicity="1" />
           <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -96,7 +118,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SYSUserRo__SYSUs__267ABA7A">
+        <Association Name="FK__SYSUserRo__SYSUs__2B3F6F97">
           <End Role="SYSUser" Type="Self.SYSUser" Multiplicity="1" />
           <End Role="SYSUserRole" Type="Self.SYSUserRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -112,18 +134,23 @@
           <EntitySet Name="LOOKUPRole" EntityType="Self.LOOKUPRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supllier" EntityType="Self.Supllier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYSUser" EntityType="Self.SYSUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYSUserProfile" EntityType="Self.SYSUserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYSUserRole" EntityType="Self.SYSUserRole" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__SYSUserPr__SYSUs__24927208" Association="Self.FK__SYSUserPr__SYSUs__24927208">
+          <AssociationSet Name="FK__Product__Supllie__286302EC" Association="Self.FK__Product__Supllie__286302EC">
+            <End Role="Supllier" EntitySet="Supllier" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SYSUserPr__SYSUs__29572725" Association="Self.FK__SYSUserPr__SYSUs__29572725">
             <End Role="SYSUser" EntitySet="SYSUser" />
             <End Role="SYSUserProfile" EntitySet="SYSUserProfile" />
           </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__LOOKU__25869641" Association="Self.FK__SYSUserRo__LOOKU__25869641">
+          <AssociationSet Name="FK__SYSUserRo__LOOKU__2A4B4B5E" Association="Self.FK__SYSUserRo__LOOKU__2A4B4B5E">
             <End Role="LOOKUPRole" EntitySet="LOOKUPRole" />
             <End Role="SYSUserRole" EntitySet="SYSUserRole" />
           </AssociationSet>
-          <AssociationSet Name="FK__SYSUserRo__SYSUs__267ABA7A" Association="Self.FK__SYSUserRo__SYSUs__267ABA7A">
+          <AssociationSet Name="FK__SYSUserRo__SYSUs__2B3F6F97" Association="Self.FK__SYSUserRo__SYSUs__2B3F6F97">
             <End Role="SYSUser" EntitySet="SYSUser" />
             <End Role="SYSUserRole" EntitySet="SYSUserRole" />
           </AssociationSet>
@@ -160,6 +187,8 @@
           <Property Name="product_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="product_price" Type="Int32" Nullable="false" />
           <Property Name="product_address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="SupllierID" Type="Int32" />
+          <NavigationProperty Name="Supllier" Relationship="mydbModel.FK__Product__Supllie__286302EC" FromRole="Product" ToRole="Supllier" />
         </EntityType>
         <EntityType Name="SYSUser">
           <Key>
@@ -260,7 +289,34 @@
             <End Role="SYSUser" EntitySet="SYSUsers" />
             <End Role="SYSUserRole" EntitySet="SYSUserRoles" />
           </AssociationSet>
+          <EntitySet Name="Suplliers" EntityType="mydbModel.Supllier" />
+          <AssociationSet Name="FK__Product__Supllie__286302EC" Association="mydbModel.FK__Product__Supllie__286302EC">
+            <End Role="Supllier" EntitySet="Suplliers" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Supllier">
+          <Key>
+            <PropertyRef Name="SupllierID" />
+          </Key>
+          <Property Name="SupllierID" Type="Int32" Nullable="false" />
+          <Property Name="SupllierName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SupllierPhone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="SupllierAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="mydbModel.FK__Product__Supllie__286302EC" FromRole="Supllier" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK__Product__Supllie__286302EC">
+          <End Type="mydbModel.Supllier" Role="Supllier" Multiplicity="0..1" />
+          <End Type="mydbModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supllier">
+              <PropertyRef Name="SupllierID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SupllierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -291,6 +347,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="mydbModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="SupllierID" ColumnName="SupllierID" />
                 <ScalarProperty Name="product_address" ColumnName="product_address" />
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="product_name" ColumnName="product_name" />
@@ -337,6 +394,16 @@
                 <ScalarProperty Name="RowCreatedDateTime" ColumnName="RowCreatedDateTime" />
                 <ScalarProperty Name="RowModifiedSYSUserID" ColumnName="RowModifiedSYSUserID" />
                 <ScalarProperty Name="RowModifiedDateTime" ColumnName="RowModifiedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suplliers">
+            <EntityTypeMapping TypeName="mydbModel.Supllier">
+              <MappingFragment StoreEntitySet="Supllier">
+                <ScalarProperty Name="SupllierAddress" ColumnName="SupllierAddress" />
+                <ScalarProperty Name="SupllierPhone" ColumnName="SupllierPhone" />
+                <ScalarProperty Name="SupllierName" ColumnName="SupllierName" />
+                <ScalarProperty Name="SupllierID" ColumnName="SupllierID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

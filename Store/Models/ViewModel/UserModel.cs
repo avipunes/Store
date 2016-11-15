@@ -109,6 +109,21 @@ namespace Store.Models.ViewModel
     public class ProductsDataView
     {
         public IEnumerable<ProductDataView> Products { get; set; }
-        //public IEnumerable<ProductDataView> Products { get; set; }
+
+
+    }
+
+    public class SuplliersDataView
+    {
+        public IEnumerable<SupllierDataView> suplliers { get; set; }
+    }
+
+    public class SupllierDataView
+    {
+        [Key]
+        public int SupllierID { get; set; }
+        public string SupllierName { get; set; }
+        public string SupllierPhone { get; set; }
+        public string SupllierAddress { get; set; }
     }
 }

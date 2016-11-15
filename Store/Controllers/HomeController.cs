@@ -71,6 +71,25 @@ namespace Store.Controllers
 
         }
 
+        public ActionResult Suplliers(string status = "")
+        {
+
+            UserManager UM = new UserManager();
+            SuplliersDataView SDV = new SuplliersDataView();
+            SDV.suplliers= UM.GetAllSuplliers();
+
+            string message = string.Empty;
+            if (status.Equals("update"))
+                message = "Update Successful";
+            else if (status.Equals("delete"))
+                message = "Delete Successful";
+
+            ViewBag.Message = message;
+
+            return PartialView(SDV);
+
+        }
+
         [AuthorizeRoles("Admin")]
         public ActionResult ManageUserPartial(string status = "")
         {
@@ -129,6 +148,20 @@ namespace Store.Controllers
             return Json(new { success = true });
         }
 
+        public ActionResult AddSupllier(string sName, string sPhone, string address)
+        {
+            SupllierDataView SDV = new SupllierDataView();
+            SDV.SupllierID = 0;
+            SDV.SupllierName = sName;
+            SDV.SupllierPhone = sPhone;
+            SDV.SupllierAddress = address;
+
+            UserManager UM = new UserManager();
+            UM.AddSupllier(SDV);
+
+            return Json(new { success = true });
+        }
+
         [AuthorizeRoles("Admin")]
         public ActionResult UpdateUserData(int userID, string loginName, string password, string firstName, string lastName, string gender, int roleID = 0)
         {
@@ -163,6 +196,20 @@ namespace Store.Controllers
             return Json(new { success = true });
         }
 
+        public ActionResult UpdateSupllierData(int id, string sName, string sPhone, string address)
+        {
+            SupllierDataView SDV = new SupllierDataView();
+            SDV.SupllierID = id;
+            SDV.SupllierName = sName;
+            SDV.SupllierPhone = sPhone;
+            SDV.SupllierAddress = address;
+
+            UserManager UM = new UserManager();
+            UM.UpdateSupllier(SDV);
+
+            return Json(new { success = true });
+        }
+
         [AuthorizeRoles("Admin")]
         public ActionResult DeleteUser(int userID)
         {
@@ -176,6 +223,12 @@ namespace Store.Controllers
         {
             UserManager UM = new UserManager();
             UM.DeleteProduct(productID);
+            return Json(new { success = true });
+        }
+        public ActionResult DeleteSupllier(int supllierID)
+        {
+            UserManager UM = new UserManager();
+            UM.DeleteSupllier(supllierID);
             return Json(new { success = true });
         }
 
