@@ -49,6 +49,7 @@ namespace Store.Models.ViewModel
         public string product_name { get; set; }
         public int product_price { get; set; }
         public string product_address { get; set; }
+        public int SupllierID { get; set; }
     }
 
     public class UserProfileView
