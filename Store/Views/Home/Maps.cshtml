@@ -1,73 +1,129 @@
-﻿
+﻿@model Store.Models.ViewModel.SuplliersDataView
 @{
     ViewBag.Title = "Maps";
     Layout = "~/Views/Shared/_afterLoginLayout.cshtml";
 }
 
-<script src="http://maps.google.com/maps/api/js?key=AIzaSyChdzK2qi0h5iSBTZpjUARAwU4rjDqnl_A&sensor=true"></script>
-
-<script>
-
-    var x = navigator.geolocation;
-    x.getCurrentPosition(success, failure);
-
-    function success(position) {
-        var mylat = position.coords.latitude;
-        var mylong = position.coords.longitude;
-
-        $('#lat').html(mylat);
-        $('#long').html(mylong);
-
-        var coords = new google.maps.LatLng(mylat, mylong);
-
-        var mapOptions = {
-            zoom: 16,
-            center: coords,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+<head>
+    <style type="text/css">
+        body, html {
+            margin: 0;
+            padding: 10px;
+            font-family: Verdana;
+            font-size: 12px;
+            color: #000;
         }
 
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-        
-        var marker = new google.maps.Marker({ map: map, position: coords });
-    }
-    
-    function failure() {
-        $('#lat').html("<p>Map is not working</p>");
-    }
+        #map-holder {
+            display: block;
+            width: 500px;
+            height: 450px;
+            margin: 72px 0 0 0;
+        }
 
-    function getAllAddress() {
-        $.ajax({
-            type: "POST",
-            url: "@(Url.Action("GetAllAddress","Home"))",
-            data: { },
-            success: function (data) {
-                $("#divUserListContainer").load("@(Url.Action("ManageUserPartial","Home", new { status ="update" }))");
-            },
-            error: function (error) {
-                //to do:
+        #text {
+            width: 430px;
+        }
+
+        #debug {
+            position: absolute;
+            top: 20px;
+            left: 540px;
+            font-size: 11px;
+        }
+    </style>
+    <script language="JavaScript" type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyChdzK2qi0h5iSBTZpjUARAwU4rjDqnl_A&sensor=true"></script>
+    <script language="JavaScript" type="text/javascript">
+
+            var map = null;
+
+            window.onload = function () {
+
+                // initialize the map
+                var mapHolder = document.getElementById("map-holder");
+                map = new google.maps.Map(
+					mapHolder,
+					{
+					    zoom: 16,
+					    mapTypeId: google.maps.MapTypeId.ROADMAP
+					}
+				);
+
+                // centering the map
+                var address = "Ha-Sar Moshe Shapira Street 18, Holon"
+                log("Address: " + address, true);
+                addressToLocation(address, changeMapLocation);
             }
 
-            });
-    }
+            // processing the results
+            function changeMapLocation(locations) {
+                if (locations && locations.length) {
+                    log("Num of results: " + locations.length);
+                    var numOfLocations = locations.length;
+                    for (var i = 0; i < numOfLocations; i++) {
+                        log("- " + locations[i].text + " / <strong>" + locations[i].location.toString() + "</strong>");
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: locations[i].location
+                        });
+                    }
+                    map.panTo(locations[0].location);
+                    map.setZoom(8);
+                } else {
+                    log("Num of results: 0");
+                }
+            }
 
-</script>
-    
-<style>
-    #map{
-        width:400px;
-        height:400px;
-    }
-</style>
+            // converting the address's string to a google.maps.LatLng object
+            function addressToLocation(address, callback) {
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode(
+					{
+					    address: address
+					},
+					function (results, status) {
 
-<h2>Maps</h2>
+					    var resultLocations = [];
 
-<div id="map">
+					    if (status == google.maps.GeocoderStatus.OK) {
+					        if (results) {
+					            var numOfResults = results.length;
+					            for (var i = 0; i < numOfResults; i++) {
+					                var result = results[i];
+					                resultLocations.push(
+										{
+										    text: result.formatted_address,
+										    addressStr: result.formatted_address,
+										    location: result.geometry.location
+										}
+									);
+					            };
+					        }
+					    } else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
+					        // address not found
+					    }
 
-</div>
+					    if (resultLocations.length > 0) {
+					        callback(resultLocations);
+					    } else {
+					        callback(null);
+					    }
+					}
+				);
+            }
 
-<div id="lat"></div>
-<div id="long"></div>
+            // debugging
+            function log(str, clear) {
+                var debugHolder = document.getElementById("debug");
+                if (clear) {
+                    debugHolder.innerHTML = "";
+                }
+                debugHolder.innerHTML = debugHolder.innerHTML + "<br />" + str;
+            }
 
-
-
-
+    </script>
+</head>
+<body>
+    <div id="map-holder"></div>
+    <div id="debug"></div>
+</body>
