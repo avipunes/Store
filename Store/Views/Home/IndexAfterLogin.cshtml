@@ -10,6 +10,10 @@
 Hi <b>@Context.User.Identity.Name !</b>
 @Html.ActionLink("Edit Account", "EditProfile", "Home")
 
-<div id="divUserListContainer">
+<div id="divProductsListContainer">
     @Html.Action("Products", "Home");
+</div>
+
+<div id="divProductsToSupListContainer">
+    @Html.Action("ProductsToSupllier", "Home");
 </div>

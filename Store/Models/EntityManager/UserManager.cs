@@ -72,6 +72,7 @@ namespace Store.Models.EntityManager
                 PR.product_name = product.product_name;
                 PR.product_price = product.product_price;
                 PR.product_address = product.product_address;
+                PR.SupllierID = product.SupllierID;
 
                 db.Products.Add(PR);
                 db.SaveChanges();
@@ -177,6 +178,46 @@ namespace Store.Models.EntityManager
                     return user.FirstOrDefault().SYSUserID;
                             }
             return 0;
+        }
+
+        public ProductsToSupllier GetSuplliersAndProducts()
+        {
+            List<ProductToSupllier> PTSList = new List<ProductToSupllier>();
+            ProductsToSupllier PSTS = new ProductsToSupllier();
+
+            //ProductsToSupllier PTS = new ProductsToSupllier();
+            using (mydbEntities db = new mydbEntities())
+            {
+                var query =
+                    from p in db.Products
+                    join su in db.Suplliers on p.SupllierID equals su.SupllierID
+                    select new 
+                    {
+                        PID = p.product_id,
+                        PNAME = p.product_name,
+                        PPRICE = p.product_price,
+                        SID = su.SupllierID,
+                        SNAME = su.SupllierName,
+                        SAD = su.SupllierAddress,
+                    };
+                //query.GroupBy(SNAME);
+                var a = query.ToList();
+                
+                for(int i=0; i < a.Count; i++)
+                {
+                    ProductToSupllier PTS = new ProductToSupllier();
+                    PTS.PID = a[i].PID;
+                    PTS.PNAME = a[i].PNAME;
+                    PTS.PPRICE = a[i].PPRICE;
+                    PTS.SID = a[i].SID;
+                    PTS.SNAME = a[i].SNAME;
+                    PTS.SAD = a[i].SAD;
+                    PTSList.Add(PTS);
+                }
+            }
+
+            PSTS.PTSList = PTSList;
+            return PSTS;
         }
 
         public List<ProductDataView> GetAllProducts()
@@ -585,5 +626,6 @@ namespace Store.Models.EntityManager
             }
             return UPV;
         }
+
     }
 }

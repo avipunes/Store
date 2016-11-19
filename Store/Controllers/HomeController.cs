@@ -90,6 +90,16 @@ namespace Store.Controllers
 
         }
 
+        public ActionResult ProductsToSupllier(string status = "")
+        {
+            UserManager UM = new UserManager();
+            ProductsToSupllier PTS = new ProductsToSupllier();
+            PTS= UM.GetSuplliersAndProducts();
+
+            return PartialView(PTS);
+
+        }
+
         [AuthorizeRoles("Admin")]
         public ActionResult ManageUserPartial(string status = "")
         {
@@ -134,13 +144,14 @@ namespace Store.Controllers
         }
 
         [AuthorizeRoles("Admin")]
-        public ActionResult AddProduct(string pName, int pPrice,string address)
+        public ActionResult AddProduct(string pName, int pPrice,string address, int pSid)
         {
             ProductDataView UDV = new ProductDataView();
             UDV.product_id = 0;
             UDV.product_name = pName;
             UDV.product_price = pPrice;
             UDV.product_address = address;
+            UDV.SupllierID = pSid;
 
             UserManager UM = new UserManager();
             UM.AddProduct(UDV);

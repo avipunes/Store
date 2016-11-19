@@ -59,6 +59,10 @@
                 <td>Address</td>
                 <td><input type="text" id="pAddressAdding" class="form-control" /></td>
             </tr>
+            <tr>
+                <td>Supllier ID</td>
+                <td><input type="text" id="pSupliierIdAdding" class="form-control" /></td>
+            </tr>
         </table>
     </div>
 
@@ -102,8 +106,9 @@
                         var pName = $("#ProductNameAdding").val();
                         var pPrice = $("#pPriceAdding").val();
                         var pAddress = $("#pAddressAdding").val();
+                        var pSid = $("#pSupliierIdAdding").val();
 
-                        AddProduct( pName, pPrice, pAddress);
+                        AddProduct(pName, pPrice, pAddress, pSid);
                         $(this).dialog("destroy");
                     },
                     Cancel: function () { $(this).dialog("destroy"); }
@@ -125,11 +130,11 @@
             });
         }
 
-        function AddProduct( name, price, address1) {
+        function AddProduct(name, price, address1, psid) {
                 $.ajax({
                     type: "POST",
                     url: "@(Url.Action("AddProduct", "Home"))",
-                    data: { pName: name, pPrice: price ,address: address1 },
+                    data: { pName: name, pPrice: price ,address: address1, pSid: psid },
                     success: function (data) {
                           $("#divProductListContainer").load("@(Url.Action("Products", "Home", new { status ="update" }))");
                 },
@@ -166,6 +171,8 @@
             $("#ProductNameAdding").val()
             $("#pPriceAdding").val()
             $("#pAddress").val()
+            $("#pSidAdding").val()
+            $("#pSupliierIdAdding").val()
 
 
             $("#divAddProduct").dialog("open");

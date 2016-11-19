@@ -42,15 +42,7 @@ namespace Store.Models.ViewModel
         [Display(Name = "Password")]
         public string Password { get; set; }
     }
-    public class ProductDataView
-    {
-        [Key]
-        public int product_id { get; set; }
-        public string product_name { get; set; }
-        public int product_price { get; set; }
-        public string product_address { get; set; }
-        public int SupllierID { get; set; }
-    }
+
 
     public class UserProfileView
     {
@@ -106,25 +98,4 @@ namespace Store.Models.ViewModel
         public UserGender UserGender { get; set; }
     }
 
-
-    public class ProductsDataView
-    {
-        public IEnumerable<ProductDataView> Products { get; set; }
-
-
-    }
-
-    public class SuplliersDataView
-    {
-        public IEnumerable<SupllierDataView> suplliers { get; set; }
-    }
-
-    public class SupllierDataView
-    {
-        [Key]
-        public int SupllierID { get; set; }
-        public string SupllierName { get; set; }
-        public string SupllierPhone { get; set; }
-        public string SupllierAddress { get; set; }
-    }
 }
