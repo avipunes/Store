@@ -2,29 +2,81 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Index</h2>
-<h2>Bla Bla ...</h2>
-<h2>Bla Bla ...</h2>
-<h2>Bla Bla ...</h2>
-<br />
-<!-- FaceBook Page display -->
-<div style="float:right" class="fb-page" data-href="https://www.facebook.com/Store-Sample-698886333599146/?ref=aymt_homepage_panel" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Store-Sample-698886333599146/?ref=aymt_homepage_panel" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Store-Sample-698886333599146/?ref=aymt_homepage_panel">Store Sample</a></blockquote></div>
-<!-- Comments display -->
-<script type="text/javascript" src="~/js/canvas.js"></script>
-<div style="float:right" class="move" style="overflow:hidden;">
-    <div>
-        <div id="fb-root"></div>
-        <script>
-            (function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/he_IL/sdk.js#xfbml=1&version=v2.7&appId=1009544939144606";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
-        <div class="fb-comments" data-href="https://www.facebook.com/Store-Sample-698886333599146/?skip_nax_wizard=true/" data-width="100" data-numposts="3"></div>
+
+
+
+<style>
+    aside p {
+        -webkit-column-count: 3; /* Chrome, Safari, Opera */
+        -moz-column-count: 3; /* Firefox */
+        column-count: 3;
+    }
+
+    aside h1 {
+        -webkit-transitioh2n: all 2s; /* For Safari 3.1 to 6.0 */
+        transition: all 2s;
+    }
+
+    aside h1:hover {
+        font-size: 50px;
+    }
+</style>
+
+<a href="http://www.accuweather.com/he/il/tel-aviv/215854/weather-forecast/215854" class="aw-widget-legal">
+    <!--
+    By accessing and/or using this code snippet, you agree to AccuWeather’s terms and conditions (in English) which can be found at http://www.accuweather.com/en/free-weather-widgets/terms and AccuWeather’s Privacy Statement (in English) which can be found at http://www.accuweather.com/en/privacy.
+    -->
+</a><div id="awcc1479171967916" class="aw-widget-current" data-locationkey="215854" data-unit="c" data-language="he" data-useip="false" data-uid="awcc1479171967916"></div>
+<script type="text/javascript" src="http://oap.accuweather.com/launch.js"></script>
+
+<div class="row">
+    <aside class="col-md-4">
+        <section>
+            <h1>Index</h1>
+        </section>
+        <section>
+            <p class="text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </section>
+
+        <section>
+            <video controls>
+                <source src="/Content/video/melawah.mp4" type="video/mp4">
+                <source src="/Content/video/melawah.oog" type="video/ogg">
+                Your browser does not support HTML5 video.
+            </video>
+            <a href="/Account/SignUp" class="button">Sign Up!</a>
+        </section>
+        <br />
+    </aside>
+    <!-- FaceBook Page display -->
+    <div class="fb-page col-md-4" data-href="https://www.facebook.com/Store-Sample-698886333599146/?ref=aymt_homepage_panel" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Store-Sample-698886333599146/?ref=aymt_homepage_panel" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Store-Sample-698886333599146/?ref=aymt_homepage_panel">Store Sample</a></blockquote></div>
+    <!-- Comments display -->
+    <div class="move col-md-4" style="overflow:hidden;">
+        <div>
+            <div id="fb-root"></div>
+            <script>
+                    (function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/he_IL/sdk.js#xfbml=1&version=v2.7&appId=1009544939144606";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));</script>
+            <div class="fb-comments" data-href="https://www.facebook.com/Store-Sample-698886333599146/?skip_nax_wizard=true/" data-width="100" data-numposts="3"></div>
+        </div>
+
     </div>
 
+</div>
+
+<div class="row">
     <!-- follow us button -->
     @Html.ActionLink("Login", "LogIn", "Account")
     No Account yet? @Html.ActionLink("Signup Now!", "SignUp", "Account")`

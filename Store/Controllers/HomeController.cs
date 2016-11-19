@@ -25,7 +25,7 @@ namespace Store.Controllers
         }
         public ActionResult Maps()
         {
-            return View();
+            return Suplliers();
         }
 
 

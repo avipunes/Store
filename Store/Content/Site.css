@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    overflow-x: hidden;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -16,3 +17,50 @@ textarea {
     max-width: 280px;
 }
 
+h1 {
+    text-shadow: 0 0 3px #395796, 0 0 5px #0000FF;
+    font-family: SansationLight!important;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border-radius: 3px;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 0;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button {
+    background-color: white;
+    color: black;
+    border: 2px solid #395796;
+}
+
+.button:hover {
+    background-color: #395796;
+    color: white;
+}
+
+.body-content{ margin-top:20px; }
+
+footer{
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    background-color: #222222;
+    bottom:0;
+}
+
+footer p{
+    color: #ffffff;
+    padding: 20px;
+}
+canvas{ position: absolute; z-index: -1; }

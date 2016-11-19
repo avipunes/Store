@@ -6,19 +6,15 @@
 
 <head>
     <style type="text/css">
-        body, html {
-            margin: 0;
-            padding: 10px;
-            font-family: Verdana;
-            font-size: 12px;
-            color: #000;
-        }
+
+        aside{ margin-top:55px}
+        #map-holder{ width:55%;}
 
         #map-holder {
             display: block;
             width: 500px;
             height: 450px;
-            margin: 72px 0 0 0;
+            margin: 55px 0 0 0;
         }
 
         #text {
@@ -27,11 +23,13 @@
 
         #debug {
             position: absolute;
+            visibility:hidden;
             top: 20px;
             left: 540px;
             font-size: 11px;
         }
     </style>
+    <!--<script src="http://maps.google.com/maps/api/js?key=AIzaSyChdzK2qi0h5iSBTZpjUARAwU4rjDqnl_A&sensor=true"></script>-->
     <script language="JavaScript" type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyChdzK2qi0h5iSBTZpjUARAwU4rjDqnl_A&sensor=true"></script>
     <script language="JavaScript" type="text/javascript">
 
@@ -44,16 +42,23 @@
                 map = new google.maps.Map(
 					mapHolder,
 					{
-					    zoom: 16,
+					    zoom: 3,
 					    mapTypeId: google.maps.MapTypeId.ROADMAP
 					}
 				);
 
                 // centering the map
-                var address = "Ha-Sar Moshe Shapira Street 18, Holon"
-                log("Address: " + address, true);
-                addressToLocation(address, changeMapLocation);
+
+                var address = $(".saddres");
+
+                for (var i = address.length - 1; i >= 0; i--) {
+                    log("Address: " + address[i], true);
+                    addressToLocation(address[i].innerText, changeMapLocation);
+                }
+
             }
+
+            var name = $(".sname");
 
             // processing the results
             function changeMapLocation(locations) {
@@ -122,8 +127,24 @@
             }
 
     </script>
+
 </head>
 <body>
-    <div id="map-holder"></div>
     <div id="debug"></div>
+    <div class="row">
+        <div id="map-holder" class="col-md-6"></div>
+        <aside class="col-md-6">
+            <table class="table table-striped table-condensed table-hover">
+                <tbody>
+                    @foreach (var i in Model.suplliers)
+                    {
+                        <tr>
+                            <td class="saddres"> @Html.DisplayFor(m => i.SupllierAddress)</td>
+                            <td class="sname"> @Html.DisplayFor(m => i.SupllierName)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </aside>
+    </div>
 </body>
