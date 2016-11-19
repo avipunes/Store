@@ -220,6 +220,164 @@ namespace Store.Models.EntityManager
             return PSTS;
         }
 
+        public List<UserProfileView> GetUserByName(string name)
+        {
+            List<UserProfileView> profiles = new List<UserProfileView>();
+            List<SYSUserProfile> users = new List<SYSUserProfile>();
+
+            using (mydbEntities db = new mydbEntities())
+            {
+                var u1 = db.SYSUserProfiles.Where(o => o.FirstName.Contains(name));
+
+                if (u1.Any())
+                {
+                    users = u1.ToList();
+                    foreach (SYSUserProfile p in users)
+                    {
+                        UserProfileView UPV = new UserProfileView();
+                        UPV.FirstName = p.FirstName;
+                        UPV.LastName = p.LastName;
+                        profiles.Add(UPV);
+                    }
+
+                }
+
+                return profiles;
+            }
+
+        }
+
+        public List<ProductDataView> GetAllProductsByFiler(string productname, string productaddress, int productprice)
+        {
+            List<ProductDataView> products = new List<ProductDataView>();
+            List<Product> pList = new List<Product>();
+
+            using (mydbEntities db = new mydbEntities())
+            {
+                ProductsDataView PSR = new ProductsDataView();
+                var p1 = db.Products.Where(o => o.product_name.Contains(productname) && o.product_address.Contains(productaddress) && o.product_price<productprice);
+
+                if (p1.Any())
+                {
+                    pList = p1.ToList();
+                    foreach (Product p in pList)
+                    {
+                        ProductDataView PR = new ProductDataView();
+                        PR.product_id = p.product_id;
+                        PR.product_name = p.product_name;
+                        PR.product_price = p.product_price;
+                        PR.product_address = p.product_address;
+                        products.Add(PR);
+                    }
+                }
+            }
+            return products;
+        }
+
+
+
+        public List<ProductToSupllier> GetSuplliersAndProductsbyname(string SupllierName, string productname, int productprice)
+        {
+            List<ProductToSupllier> PTSList = new List<ProductToSupllier>();
+            ProductsToSupllier PSTS = new ProductsToSupllier();
+
+            //ProductsToSupllier PTS = new ProductsToSupllier();
+            using (mydbEntities db = new mydbEntities())
+            {
+                var query =
+                    from p in db.Products
+                    join su in db.Suplliers on p.SupllierID equals su.SupllierID
+                    select new
+                    {
+                        PID = p.product_id,
+                        PNAME = p.product_name,
+                        PPRICE = p.product_price,
+                        SID = su.SupllierID,
+                        SNAME = su.SupllierName,
+                        SAD = su.SupllierAddress,
+                    };
+                if (!query.Any()|| SupllierName==null||productname==null||productprice==0)
+                {
+                    return PTSList;
+                }
+
+                //query.GroupBy(SNAME);
+                var a = query.ToList();
+
+                for (int i = 0; i < a.Count; i++)
+                {
+                    if (a[i].PNAME.Contains(productname) && a[i].SNAME.Contains(SupllierName) && a[i].PPRICE < productprice)
+                              {
+                        ProductToSupllier PTS = new ProductToSupllier();
+                        PTS.PID = a[i].PID;
+                        PTS.PNAME = a[i].PNAME;
+                        PTS.PPRICE = a[i].PPRICE;
+                        PTS.SID = a[i].SID;
+                        PTS.SNAME = a[i].SNAME;
+                        PTS.SAD = a[i].SAD;
+                        PTSList.Add(PTS);
+                    } }
+            }
+
+            PSTS.PTSList = PTSList;
+            return PTSList;
+        }
+        public List<ProductDataView> GetAllProductsByName(string name)
+        {
+            List<ProductDataView> products = new List<ProductDataView>();
+            List<Product> pList = new List<Product>();
+
+            using (mydbEntities db = new mydbEntities())
+            {
+                ProductsDataView PSR = new ProductsDataView();
+                var p1 = db.Products.Where(o => o.product_name.Contains(name));
+
+                if (p1.Any())
+                {
+                    pList = p1.ToList();
+                    foreach (Product p in pList)
+                    {
+                        ProductDataView PR = new ProductDataView();
+                        PR.product_id = p.product_id;
+                        PR.product_name = p.product_name;
+                        PR.product_price = p.product_price;
+                        PR.product_address = p.product_address;
+                        products.Add(PR);
+                    }
+                }
+                return products;
+            }
+
+        }
+             public List<SupllierDataView> GetAllSupplierByName(string name)
+        {
+            List<SupllierDataView> Supllier = new List<SupllierDataView>();
+            List<Supllier> pList = new List<Supllier>();
+
+            using (mydbEntities db = new mydbEntities())
+            {
+                SupllierDataView PSR = new SupllierDataView();
+                var p1 = db.Suplliers.Where(o => o.SupllierName.Contains(name));
+
+                if (p1.Any())
+                {
+                    pList = p1.ToList();
+                    foreach (Supllier p in pList)
+                    {
+                        SupllierDataView PR = new SupllierDataView();
+                        PR.SupllierID = p.SupllierID;
+                        PR.SupllierName = p.SupllierName;
+                        PR.SupllierPhone = p.SupllierPhone;
+                        PR.SupllierAddress = p.SupllierAddress;
+                        Supllier.Add(PR);
+                    }
+                }
+            }
+
+
+            return Supllier;
+        }
+
         public List<ProductDataView> GetAllProducts()
         {
             List <ProductDataView> products = new List<ProductDataView>();
@@ -227,14 +385,17 @@ namespace Store.Models.EntityManager
             using(mydbEntities db =new mydbEntities())
             {
                 ProductDataView PR;
-                var pros = db.Products.ToList();
+                var pros = db.Products.GroupBy(price => price.product_price).ToList();
                 if (pros != null)
                 {
-                    foreach (Product p in pros)
+                    foreach (IGrouping<int, Product> p1 in pros)
                     {
-                        PR = new ProductDataView();
-                        PR = GetProductData(p.product_id);
-                        products.Add(PR);
+                        foreach(Product p in p1)
+                        {
+                            PR = new ProductDataView();
+                            PR = GetProductData(p.product_id);
+                            products.Add(PR);
+                        }
                     }
                 }
 

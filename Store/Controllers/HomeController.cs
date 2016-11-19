@@ -7,6 +7,7 @@ using Store.Security;
 using System.Web.Security;
 using Store.Models.ViewModel;
 using Store.Models.EntityManager;
+using Store.Models.DB;
 
 namespace Store.Controllers
 {
@@ -53,6 +54,61 @@ namespace Store.Controllers
             return View();
         }
 
+
+        public ActionResult GetAllProductsByName(string name)
+        {
+            UserManager UM = new UserManager();
+            ProductsDataView PDV = new ProductsDataView();
+      
+            PDV.Products = UM.GetAllProductsByName(name);
+
+            return PartialView(PDV);
+
+        }
+
+        
+        public ActionResult GetAllProductsByFiler(string productname, string productaddress, string productprice )
+        {
+            UserManager UM = new UserManager();
+            ProductsDataView PDV = new ProductsDataView();
+            if (productprice == "")
+            {
+                productprice = "1000000";
+            }
+
+            PDV.Products = UM.GetAllProductsByFiler(productname, productaddress, Convert.ToInt32(productprice));
+
+
+            return PartialView(PDV);
+        }
+
+        public ActionResult GetSuplliersAndProductsbyname(string SupllierName, string productname, string productprice)
+        {
+            UserManager UM = new UserManager();
+            ProductsToSupllier PDV = new ProductsToSupllier();
+            if (productprice == "")
+            {
+                productprice = "1000000";
+            }
+
+            PDV.PTSList = UM.GetSuplliersAndProductsbyname(SupllierName, productname, Convert.ToInt32(productprice));
+
+
+            return PartialView(PDV);
+        }
+
+
+
+        public ActionResult GetAllSuppllierByname(string name)
+        {
+            UserManager UM = new UserManager();
+            SuplliersDataView PDV = new SuplliersDataView();
+
+            PDV.suplliers = UM.GetAllSupplierByName(name);
+
+            return PartialView(PDV);
+
+        }
         public ActionResult Products(string status = "")
         {
 
@@ -98,6 +154,17 @@ namespace Store.Controllers
 
             return PartialView(PTS);
 
+        }
+
+
+        public ActionResult GetAllUsersByName(string name)
+        {
+            UserManager UM = new UserManager();
+            UserDataView UDV = new UserDataView();
+
+            UDV.UserProfile = UM.GetUserByName(name);
+
+            return PartialView(UDV);
         }
 
         [AuthorizeRoles("Admin")]

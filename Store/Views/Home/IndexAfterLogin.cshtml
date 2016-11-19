@@ -14,6 +14,13 @@ Hi <b>@Context.User.Identity.Name !</b>
     @Html.Action("Products", "Home");
 </div>
 
+<form action="GetSuplliersAndProductsbyname">
+    <input type="text" name="SupllierName" placeholder="Supllier Name..">
+    <input type="text" name="productname" placeholder="Product Name..">
+    <input type="text" name="productprice" placeholder="Max Price..">
+    <input type="submit" value="Submit">
+</form>
+
 <div id="divProductsToSupListContainer">
     @Html.Action("ProductsToSupllier", "Home");
 </div>

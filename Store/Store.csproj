@@ -260,6 +260,12 @@
     <Content Include="Views\Home\Products.cshtml" />
     <Content Include="Views\Home\Maps.cshtml" />
     <Content Include="Views\Home\ProductsToSupllier.cshtml" />
+    <Content Include="Views\Home\GetAllProductsByName.cshtml" />
+    <Content Include="Views\Home\GetAllProductsByFiler.cshtml" />
+    <None Include="Views\Home\GetAllSuppllierByname.cshtml" />
+    <Content Include="Views\Home\Suplliers.cshtml" />
+    <Content Include="Views\Home\GetAllUsersByName.cshtml" />
+    <Content Include="Views\Home\GetSuplliersAndProductsbyname.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,29 @@
+﻿@model Store.Models.ViewModel.UserDataView
+
+@{
+    ViewBag.Title = "GetAllUsersByName";
+    Layout = "~/Views/Shared/_afterLoginLayout.cshtml";
+}
+
+<h2>GetAllUsersByName</h2>
+
+
+<div>
+    <h1>List of Users</h1>
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model.UserProfile)
+            {
+                <tr>
+                    <td> @Html.DisplayFor(m => i.FirstName)</td>
+                    <td> @Html.DisplayFor(m => i.LastName)</td>
+                </tr>
+            }
+        </tbody>
+    </table>

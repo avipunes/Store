@@ -24,7 +24,7 @@ h1 {
 
 .button {
     background-color: #4CAF50; /* Green */
-    border-radius: 3px;
+    border-radius: 7px;
     border: none;
     color: white;
     padding: 16px 32px;
@@ -57,6 +57,7 @@ footer{
     height: 60px;
     background-color: #222222;
     bottom:0;
+    left:0;
 }
 
 footer p{
@@ -64,3 +65,23 @@ footer p{
     padding: 20px;
 }
 canvas{ position: absolute; z-index: -1; }
+
+input[type=text] {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 7px 12px 9px;
+    margin-right: 10px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    width: 100%;
+    margin-right: 10px;
+}

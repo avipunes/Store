@@ -1,0 +1,31 @@
+﻿@model Store.Models.ViewModel.SuplliersDataView
+
+@{
+    ViewBag.Title = "Suplliers";
+    Layout = "~/Views/Shared/_afterLoginLayout.cshtml";
+}
+
+<h1>List of Suplliers</h1>
+<span class="alert-success">@ViewBag.Message</span>
+<div class="AddSupllier"><a herf="javascript:void(0)">Add Suplliers</a></div>
+<table class="table table-striped table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Supllier Name</th>
+            <th>Phone</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model.suplliers)
+        {
+        <tr>
+            <td> @Html.DisplayFor(m => i.SupllierID)</td>
+            <td> @Html.DisplayFor(m => i.SupllierName)</td>
+            <td> @Html.DisplayFor(m => i.SupllierPhone)</td>
+            <td> @Html.DisplayFor(m => i.SupllierAddress)</td>
+        </tr>
+        }
+    </tbody>
+</table>
